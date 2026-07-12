@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SF · Napa · Portland 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & TOKENS ─────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+
+:root {
+  --white:    #FFFFFF;
+  --cream:    #FAFAF7;
+  --sand:     #F5F0E8;
+  --ink:      #1A1A1A;
+  --ink2:     #444;
+  --muted:    #888;
+  --divider:  #E8E4DC;
+  --gold:     #B8943A;
+  --gold-lt:  #D4AF5A;
+  --gold-bg:  #FDF8EC;
+  --sf-h:     #1B3D6F;
+  --sf-lt:    #EBF1FA;
+  --napa-h:   #6B2030;
+  --napa-lt:  #FAECEE;
+  --pdx-h:    #1A4D32;
+  --pdx-lt:   #EAF5EE;
+  --ok:       #1A5C35;
+  --warn:     #8A5A00;
+  --r:        14px;    /* card radius */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ─── PAGE SWITCHER ──────────────────────────── */
+.pg {
+  display: none !important;
+  visibility: hidden;
+  position: absolute;
+  pointer-events: none;
+}
+.pg.on {
+  display: block !important;
+  visibility: visible;
+  position: relative;
+  pointer-events: auto;
+}
+
+/* ─── COVER ──────────────────────────────────── */
+#p0 { background: var(--white); min-height: 100vh; }
+#p0-inner { display: flex; flex-direction: column; }
+
+.cv-top {
+  background: var(--sf-h);
+  padding: 52px 24px 70px;
+  text-align: center;
+  position: relative;
+}
+
+/* wave bottom */
+.cv-top::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 36px;
+  background: var(--white);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.cv-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 10px;
+}
+
+.cv-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 9vw, 72px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.0;
+  margin-bottom: 6px;
+}
+
+.cv-sub {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(18px, 4vw, 26px);
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 22px;
+}
+
+.cv-pill {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 5px 18px;
+  border-radius: 20px;
+}
+
+/* photo triptych */
+.cv-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 28px 18px 0;
+}
+
+.cv-card {
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  transition: transform .2s;
+}
+.cv-card:hover, .cv-card:active { transform: translateY(-3px); }
+
+.cv-card-photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cv-card-photo.sf-grad   { background: linear-gradient(160deg,#3B6FA0,#1B3D6F); }
+.cv-card-photo.napa-grad { background: linear-gradient(160deg,#A05060,#6B2030); }
+.cv-card-photo.pdx-grad  { background: linear-gradient(160deg,#2A7050,#1A4D32); }
+
+.cv-card-ov {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 55%);
+}
+
+.cv-card-lbl {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 14px 12px 12px;
+  text-align: center;
+}
+
+.cv-city {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: #fff;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.cv-dates {
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+}
+
+/* travelers */
+.cv-travelers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 20px 18px 6px;
+}
+
+.cv-name {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink2);
+  background: var(--gold-bg);
+  border: 1px solid rgba(184,148,58,.25);
+  padding: 5px 16px;
+  border-radius: 30px;
+}
+
+.cv-amp { color: var(--muted); font-size: 14px; }
+
+.cv-cta {
+  padding: 16px 18px 40px;
+  text-align: center;
+}
+
+.cv-btn {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(184,148,58,.4);
+  transition: all .2s;
+}
+.cv-btn:hover { background: #A07A28; transform: translateY(-1px); }
+
+/* ─── DAY PAGE SHELL ─────────────────────────── */
+.day-page { background: var(--cream); min-height: 100vh; }
+
+/* HERO PHOTO */
+.d-hero {
+  width: 100%;
+  height: clamp(200px, 48vw, 340px);
+  position: relative;
+  overflow: hidden;
+}
+
+.d-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-sf   { background: linear-gradient(145deg,#5B8EC0 0%,#2A5A90 40%,#1B3D6F 100%); }
+.hero-alcatraz { background: linear-gradient(145deg,#7AAAC8 0%,#4A82A8 40%,#1B4A6A 100%); }
+.hero-drive { background: linear-gradient(145deg,#6090B0 0%,#3A6888 40%,#1E4A68 100%); }
+.hero-napa  { background: linear-gradient(145deg,#C09070 0%,#906040 45%,#6B3820 100%); }
+.hero-fly   { background: linear-gradient(145deg,#8AAAC8 0%,#5A80A8 45%,#2A4870 100%); }
+.hero-pdx   { background: linear-gradient(145deg,#60A878 0%,#306850 45%,#1A4030 100%); }
+.hero-bkg   { background: linear-gradient(145deg,#4A6080 0%,#2A4060 100%); }
+
+.d-hero-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+.badge-sf   { background: rgba(27,61,111,.75); }
+.badge-napa { background: rgba(107,32,48,.75); }
+.badge-pdx  { background: rgba(26,77,50,.75); }
+.badge-tr   { background: rgba(40,40,40,.65); }
+
+.hero-inner {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end;
+  background: linear-gradient(to top, rgba(0,0,0,.18) 0%, transparent 60%);
+}
+
+/* STICKY NAV */
+.d-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--divider);
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+}
+
+.nav-home {
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  color: var(--gold);
+  background: none; border: none; cursor: pointer;
+  white-space: nowrap;
+  padding: 0;
+}
+
+.nav-dots {
+  flex: 1;
+  display: flex; gap: 5px;
+  justify-content: center; flex-wrap: wrap;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--divider);
+  border: none; padding: 0; cursor: pointer;
+  transition: all .2s;
+}
+.dot.on { background: var(--gold); transform: scale(1.35); }
+
+.nav-arr {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--divider);
+  background: var(--white);
+  cursor: pointer; font-size: 14px;
+  color: var(--ink2);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.nav-arr:hover { border-color: var(--gold); color: var(--gold); }
+.nav-arr:disabled { opacity: .25; cursor: default; }
+
+/* DAY HEADER */
+.d-hdr {
+  background: var(--white);
+  margin: 16px 14px 0;
+  border-radius: var(--r);
+  padding: 18px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.d-hdr-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 17px;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+
+.d-hdr-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 5vw, 26px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.d-hdr-date {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* CONTENT */
+.d-body {
+  padding: 14px 14px 110px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* section label */
+.sec-lbl {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 22px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--divider);
+}
+
+/* ─── FLIGHT BOX ─────────────────────────────── */
+.fbox {
+  background: #162D50;
+  border-radius: var(--r);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+.fbox-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 10px;
+}
+
+.frow {
+  display: flex; gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.frow:first-of-type { border-top: none; }
+
+.fperson {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+  min-width: 68px;
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+
+.finfo { flex: 1; }
+
+.fnum {
+  font-size: 10px;
+  color: rgba(255,255,255,.32);
+  letter-spacing: .06em;
+  margin-bottom: 2px;
+}
+
+.ftimes {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .01em;
+}
+
+.farr { color: var(--gold-lt); margin: 0 4px; }
+
+.froute { font-size: 12px; color: rgba(255,255,255,.38); margin-top: 2px; }
+.fconf  { font-size: 10px; color: var(--gold-lt); margin-top: 2px; letter-spacing: .04em; }
+
+/* ─── RACHEL BOX ─────────────────────────────── */
+.rbox {
+  background: var(--gold-bg);
+  border: 1px solid rgba(184,148,58,.28);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+
+.rbox-lbl {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px;
+}
+
+.rbox-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px; color: var(--ink2);
+  margin-bottom: 12px; line-height: 1.45;
+}
+
+.ropt {
+  font-size: 14px; color: var(--ink2);
+  padding: 9px 0;
+  border-top: 1px solid rgba(184,148,58,.2);
+  line-height: 1.55;
+}
+.ropt:first-of-type { border-top: none; }
+.ropt strong { color: var(--ink); }
+
+/* ─── TIMELINE ───────────────────────────────── */
+.tl-item {
+  display: flex; gap: 12px;
+  margin-bottom: 6px;
+}
+
+.tl-l {
+  display: flex; flex-direction: column;
+  align-items: center;
+  width: 52px; flex-shrink: 0;
+}
+
+.tl-time {
+  font-size: 11px; font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+  line-height: 1.3;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.tl-line {
+  width: 1px; flex: 1;
+  min-height: 20px;
+  background: var(--divider);
+  margin-top: 6px;
+}
+
+.tl-r {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--divider);
+  border-radius: var(--r);
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,.04);
+}
+
+.tl-r.booked { border-left: 3px solid var(--ok); }
+.tl-r.warn   { border-left: 3px solid var(--warn); }
+.tl-r.opt    { background: var(--cream); box-shadow: none; }
+
+.pills { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 5px; }
+
+.pill {
+  display: inline-flex; align-items: center;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 20px;
+}
+.pill-ok   { background: rgba(26,92,53,.1);  color: var(--ok); }
+.pill-warn { background: rgba(138,90,0,.1); color: var(--warn); }
+
+.tl-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--ink); margin-bottom: 4px;
+  line-height: 1.25;
+}
+
+.tl-desc {
+  font-size: 13px; color: var(--ink2);
+  line-height: 1.6;
+}
+
+.tl-conf {
+  font-size: 11px; color: var(--muted);
+  font-style: italic; margin-top: 5px;
+}
+
+/* PULL QUOTE */
+.pq {
+  border-left: 3px solid var(--sf-h);
+  background: var(--sf-lt);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px; margin: 8px 0;
+}
+.pq.napa { border-left-color: var(--napa-h); background: var(--napa-lt); }
+
+.pq-txt {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 13px;
+  color: var(--ink2); line-height: 1.6;
+}
+.pq-attr {
+  font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+  margin-top: 4px;
+}
+
+/* DINNER OPTIONS */
+.dinner { margin-top: 8px; }
+
+.dgrp-lbl {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); margin: 12px 0 6px;
+}
+
+.dopt {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--divider);
+  font-size: 13px; color: var(--ink2);
+  line-height: 1.5;
+}
+.dopt:last-child { border-bottom: none; }
+.dopt strong { color: var(--ink); font-size: 14px; display: block; margin-bottom: 1px; }
+
+/* WINERY CARD */
+.wcard {
+  background: var(--sand);
+  border: 1px solid var(--divider);
+  border-radius: 10px;
+  padding: 12px 14px; margin-top: 8px;
+}
+
+.wcard-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 700; color: var(--ink);
+}
+
+.wcard-tag { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 6px; }
+
+.wcard-desc { font-size: 13px; color: var(--ink2); line-height: 1.55; }
+
+.wcard-meta {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--divider);
+}
+.wm-item { font-size: 12px; color: var(--muted); }
+.wm-item strong {
+  display: block; font-size: 9px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); margin-bottom: 1px;
+}
+
+/* FIXED FOOTER NAV */
+.foot {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  border-top: 1px solid var(--divider);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  z-index: 100;
+  box-shadow: 0 -2px 10px rgba(0,0,0,.06);
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+}
+
+.foot-btn {
+  background: none;
+  border: 1.5px solid var(--divider);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all .2s;
+}
+.foot-btn:hover { border-color: var(--gold); color: var(--gold); }
+.foot-btn:disabled { opacity: .25; cursor: default; }
+
+.foot-mid { text-align: center; }
+.foot-lbl { font-family: 'Dancing Script', cursive; font-size: 18px; color: var(--gold); line-height: 1.1; }
+.foot-sub { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* ─── BOOKINGS PAGE ───────────────────────────── */
+.bk-hero {
+  background: #162D50;
+  padding: 30px 20px 26px;
+  text-align: center;
+}
+.bk-h1 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.bk-sub { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.38); }
+
+.bk-body { max-width: 680px; margin: 0 auto; padding: 16px 14px 110px; }
+
+.bk-grp { font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; }
+
+.bk-item {
+  background: var(--white);
+  border: 1px solid var(--divider);
+  border-radius: var(--r);
+  padding: 13px 15px;
+  margin-bottom: 8px;
+  display: flex; gap: 11px; align-items: flex-start;
+}
+
+.bk-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0; margin-top: 1px;
+}
+.bk-icon.ok   { background: rgba(26,92,53,.1); color: var(--ok); }
+.bk-icon.todo { background: rgba(138,90,0,.1); color: var(--warn); }
+
+.bk-name { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 3px; }
+.bk-det  { font-size: 12px; color: var(--muted); line-height: 1.4; }
+.bk-act  { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--warn); margin-top: 3px; }
+.booking-conf { display: block; margin-top: 6px; font-size: 11px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 6px 10px; font-family: monospace; color: var(--gold-lt); cursor: pointer; width: 100%; text-align: left; }
+
+/* ─── PORTLAND COMING SOON ───────────────────── */
+.pdx-soon { text-align: center; padding: 28px 16px; }
+.pdx-icon { font-size: 50px; margin-bottom: 12px; }
+.pdx-title { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; color: var(--ink2); margin-bottom: 6px; }
+.pdx-desc { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 300px; margin: 0 auto 22px; }
+
+.mustdo {
+  background: var(--white);
+  border: 1px solid var(--divider);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  text-align: left;
+}
+
+.mi {
+  display: flex; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--divider);
+  font-size: 14px; color: var(--ink2); line-height: 1.4;
+}
+.mi:last-child { border-bottom: none; }
+.mi strong { color: var(--ink); }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COVER
+══════════════════════════════════════════════ -->
+<div class="pg on" id="p0">
+  <div id="p0-inner" style="background:#fff; min-height:100vh; flex-direction:column;">
+
+    <div class="cv-top" style="padding:0; height:260px; position:relative; overflow:hidden;">
+      <!-- Photo collage: 3 panels -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; height:100%; gap:2px;">
+        <div style="grid-row:1/3; position:relative; overflow:hidden;">
+          <img src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Golden Gate" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.background='#1B3D6F';this.style.display='block';">
+        </div>
+        <div style="position:relative; overflow:hidden;">
+          <img src="https://images.pexels.com/photos/35227785/pexels-photo-35227785.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Napa Valley" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.background='#6B2030';this.style.display='block';">
+        </div>
+        <div style="position:relative; overflow:hidden;">
+          <img src="https://images.pexels.com/photos/3682818/pexels-photo-3682818.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Portland" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.background='#1A4D32';this.style.display='block';">
+        </div>
+      </div>
+      <!-- Overlay with title -->
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.65) 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:24px 20px;">
+        <div class="cv-script" style="margin-bottom:6px;">A Family Adventure · Summer 2026</div>
+        <h1 class="cv-h1" style="font-size:clamp(32px,8vw,60px);">San Francisco</h1>
+        <div class="cv-sub" style="font-size:clamp(16px,4vw,22px);margin-bottom:14px;">Napa Valley · Portland</div>
+        <div class="cv-pill">July 19 – 28 · Ten Days on the West Coast</div>
+      </div>
+    </div>
+
+    <!-- Photo triptych — tap each city to jump there -->
+    <div class="cv-photos">
+
+      <div class="cv-card" onclick="go(1)">
+        <div class="sf-grad" style="position:absolute;inset:0;"></div>
+        <img src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="San Francisco" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <div class="cv-card-ov"></div>
+        <div class="cv-card-lbl">
+          <span class="cv-city">San Francisco</span>
+          <span class="cv-dates">Jul 19–21</span>
+        </div>
+      </div>
+
+      <div class="cv-card" onclick="go(4)">
+        <div class="napa-grad" style="position:absolute;inset:0;"></div>
+        <img src="https://images.pexels.com/photos/35227785/pexels-photo-35227785.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Napa Valley" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <div class="cv-card-ov"></div>
+        <div class="cv-card-lbl">
+          <span class="cv-city">Napa Valley</span>
+          <span class="cv-dates">Jul 21–23</span>
+        </div>
+      </div>
+
+      <div class="cv-card" onclick="go(6)">
+        <div class="pdx-grad" style="position:absolute;inset:0;"></div>
+        <img src="https://images.pexels.com/photos/3682818/pexels-photo-3682818.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Portland" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+        <div class="cv-card-ov"></div>
+        <div class="cv-card-lbl">
+          <span class="cv-city">Portland</span>
+          <span class="cv-dates">Jul 23–28</span>
+        </div>
+      </div>
+
+    </div><!-- /cv-photos -->
+
+    <div class="cv-travelers">
+      <div class="cv-name">Cris</div>
+      <div class="cv-amp">&amp;</div>
+      <div class="cv-name">Caroline</div>
+      <div class="cv-amp">&amp;</div>
+      <div class="cv-name">Rachel</div>
+    </div>
+
+    <div class="cv-cta">
+      <button class="cv-btn" onclick="go(1)">Begin the Journey →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DAY 1 — ARRIVAL SF
+══════════════════════════════════════════════ -->
+<div class="pg" id="p1">
+  <div class="day-page">
+
+    <div class="d-hero hero-sf">
+      <img src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="San Francisco" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <div class="hero-inner"></div>
+      <div class="d-hero-badge badge-sf">San Francisco</div>
+    </div>
+
+    <nav class="d-nav">
+      <button class="nav-home" onclick="go(0)">SF · Napa · PDX</button>
+      <div class="nav-dots" id="dots1"></div>
+      <button class="nav-arr" onclick="go(0)">←</button>
+      <button class="nav-arr" onclick="go(2)">→</button>
+    </nav>
+
+    <div class="d-hdr">
+      <div class="d-hdr-script">Day one</div>
+      <div class="d-hdr-title">Arrival — The City by the Bay</div>
+      <div class="d-hdr-date">Sunday, July 19, 2026</div>
+    </div>
+
+    <div class="d-body">
+
+      <div class="fbox">
+        <div class="fbox-lbl">✈ Flights — July 19</div>
+        <div class="frow">
+          <div class="fperson">Rachel</div>
+          <div class="finfo">
+            <div class="fnum">UA 1896 · Seat 29A · Conf. BRFMQY</div>
+            <div class="ftimes">5:15am <span class="farr">→</span> 7:01am</div>
+            <div class="froute">Portland PDX → San Francisco SFO</div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fperson">Cris &amp;<br>Caroline</div>
+          <div class="finfo">
+            <div class="fnum">UA 611 · Seats 1A &amp; 1B · Conf. OZWC57</div>
+            <div class="ftimes">6:38am <span class="farr">→</span> 9:15am</div>
+            <div class="froute">Tampa TPA → San Francisco SFO</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rbox">
+        <div class="rbox-lbl">☕ Rachel Arrives First — 2+ Hours to Wait</div>
+        <div class="rbox-title">Rachel lands at 7:01am. Cris &amp; Caroline don't arrive until 9:15am. Best spots at SFO:</div>
+        <div class="ropt"><strong>Napa Farms Market</strong> — The best spot in the airport. Bagels, lattes from Equator Coffee, fresh pastries, salads, sandwiches. Frequent flyers swear by it. International Terminal.</div>
+        <div class="ropt"><strong>Equator Coffees</strong> — Women-founded, B Corp certified Bay Area roaster. Excellent espresso. Terminal 1 and Terminal 3 (Klein's Deli).</div>
+        <div class="ropt"><strong>Roasting Plant Coffee</strong> — Pre-security in the International Terminal. Serious single-origin coffee, cool atmosphere, great way to kill an hour.</div>
+      </div>
+
+      <div class="sec-lbl">The Day's Plan</div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">9:15am</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Land at SFO — All Together</div>
+          <div class="tl-desc">Rachel meets Cris &amp; Caroline at arrivals. Uber to hotel together (~30 min into the city).</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">11:15am</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Lunch — Boudin Bakery</div>
+          <div class="tl-desc">Fisherman's Wharf. Clam chowder in a sourdough bowl. The quintessential SF first meal. Treat it as a proper sit-down, not a quick stop.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">12:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Pier 39 + Sea Lions</div>
+          <div class="tl-desc">Quick stroll along the waterfront. Sea lions are the main event. Don't linger past 20 minutes.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">1:15pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Ghirardelli Square</div>
+          <div class="tl-desc">The original chocolate factory turned waterfront plaza. Quick explore and chocolate stop.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">1:45pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Cable Car Ride</div>
+          <div class="tl-desc">One ride only. Board at Hyde &amp; Beach, ride to Powell Street. The most San Francisco thing you can do.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">2:15pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Lombard Street</div>
+          <div class="tl-desc">Dropped off nearby. The famously crooked block — walk it, get the photos, move on.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">3:00pm</div><div class="tl-line"></div></div>
+        <div class="tl-r opt">
+          <div class="tl-title">Hotel Check-in + Rest</div>
+          <div class="tl-desc">Everyone has been up since before dawn. Don't skip this — it makes the evening much better.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">5:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Crissy Field</div>
+          <div class="tl-desc">Beach walk with full Golden Gate views in afternoon daylight. One of the best free experiences in SF. Bring a layer — it will be cool.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">7:15pm</div><div class="tl-line"></div></div>
+        <div class="tl-r warn">
+          <div class="pills"><span class="pill pill-warn">⚠ Reserve Ahead</span></div>
+          <div class="tl-title">Rooftop Drinks — Charmaine's</div>
+          <div class="tl-desc">Proper Hotel, SF. Fire pits, outdoor rooftop, best atmosphere in the city. Sun still up, great views, no sunset rush. Backups: Cityscape at Hilton Union Square or The View Lounge at Marriott Marquis.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">8:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Dinner — Fog Harbor Fish House</div>
+          <div class="tl-desc">Pier 39. Waterfront, solid seafood, relaxed. The right way to end a long first day.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="foot">
+    <button class="foot-btn" onclick="go(0)">← Cover</button>
+    <div class="foot-mid"><div class="foot-lbl">Day 1</div><div class="foot-sub">San Francisco</div></div>
+    <button class="foot-btn" onclick="go(2)">Day 2 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DAY 2 — ALCATRAZ + NORTH BEACH
+══════════════════════════════════════════════ -->
+<div class="pg" id="p2">
+  <div class="day-page">
+    <div class="d-hero hero-alcatraz">
+      <img src="https://images.pexels.com/photos/2869500/pexels-photo-2869500.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Alcatraz Island" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <div class="hero-inner"></div>
+      <div class="d-hero-badge badge-sf">San Francisco</div>
+    </div>
+
+    <nav class="d-nav">
+      <button class="nav-home" onclick="go(0)">SF · Napa · PDX</button>
+      <div class="nav-dots" id="dots2"></div>
+      <button class="nav-arr" onclick="go(1)">←</button>
+      <button class="nav-arr" onclick="go(3)">→</button>
+    </nav>
+
+    <div class="d-hdr">
+      <div class="d-hdr-script">Day two</div>
+      <div class="d-hdr-title">Alcatraz · Chinatown · North Beach</div>
+      <div class="d-hdr-date">Monday, July 20, 2026</div>
+    </div>
+
+    <div class="d-body">
+      <div class="sec-lbl">The Day's Plan</div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">8:10am</div><div class="tl-line"></div></div>
+        <div class="tl-r booked">
+          <div class="pills"><span class="pill pill-ok">✓ Booked</span></div>
+          <div class="tl-title">Alcatraz — Pier 33</div>
+          <div class="tl-desc">Arrive by 8:10am for the 8:40am ferry. QR code covers all three — keep it accessible. Board 30 min early as instructed.</div>
+          <div class="tl-conf">Conf. i73885120 / 73885116 · 3 adults · $143.85</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">8:40am–<br>12:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-r booked">
+          <div class="tl-title">Alcatraz Island Tour</div>
+          <div class="tl-desc">Don't skip the audio tour — narrated by former guards and inmates, it's one of the best audio experiences in the country. The cellhouse, solitary confinement, and escape attempt stories are gripping.</div>
+          <div class="pq" style="margin-top:10px;">
+            <div class="pq-txt">"The Rock is unlike anything you've experienced — and unlike anything you'll find anywhere else."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">12:45pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Lunch — Z &amp; Y Restaurant, Chinatown</div>
+          <div class="tl-desc">Clay St, Chinatown — right on the way to North Beach. One of the best Chinese restaurants in SF. Sichuan cuisine, proper sit-down, locals eat here. Bold, memorable flavors.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">2:00pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">North Beach → Filbert Steps</div>
+          <div class="tl-desc">Start at Washington Square Park. Walk up Filbert Street to Telegraph Hill — steep but short, great views over the bay at the top. Watch for the famous wild parrots. Budget 90 relaxed minutes.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">4:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-r opt">
+          <div class="tl-title">Lombard Street (Optional)</div>
+          <div class="tl-desc">Already saw it yesterday. Skip if tired — you've had a full day.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">Evening</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Dinner — Choose Your Night</div>
+          <div class="tl-desc">
+            <div class="dinner">
+              <div class="dgrp-lbl">Stay in North Beach</div>
+              <div class="dopt"><strong>Original Joe's</strong>Classic SF Italian-American, great cocktails, since 1937. Best all-around if you stay in the neighborhood.</div>
+              <div class="dopt"><strong>Tony's Pizza Napoletana</strong>Consistently ranked one of the best pizzas in the country. Fun and buzzy. Reserve ahead.</div>
+              <div class="dopt"><strong>The Matterhorn</strong>Swiss raclette and fondue. Cozy, unique, perfect slower evening.</div>
+              <div class="dgrp-lbl">Marriott/SoMa Area + Rooftop After</div>
+              <div class="dopt"><strong>Tropisueño</strong>75 Yerba Buena Lane — next door to the Marriott Marquis. Handcrafted Mexican, strong tequila/mezcal program. Walk to The View Lounge after.</div>
+              <div class="dopt"><strong>Matador</strong>679 Sutter St, 5 min from Marriott. Elevated tacos, birria, fajitas, mezcal margaritas. More casual energy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="foot">
+    <button class="foot-btn" onclick="go(1)">← Day 1</button>
+    <div class="foot-mid"><div class="foot-lbl">Day 2</div><div class="foot-sub">San Francisco</div></div>
+    <button class="foot-btn" onclick="go(3)">Day 3 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DAY 3 — GOLDEN GATE → NAPA
+══════════════════════════════════════════════ -->
+<div class="pg" id="p3">
+  <div class="day-page">
+    <div class="d-hero hero-drive">
+      <img src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Golden Gate Bridge" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <div class="hero-inner"></div>
+      <div class="d-hero-badge badge-tr">SF → Napa</div>
+    </div>
+
+    <nav class="d-nav">
+      <button class="nav-home" onclick="go(0)">SF · Napa · PDX</button>
+      <div class="nav-dots" id="dots3"></div>
+      <button class="nav-arr" onclick="go(2)">←</button>
+      <button class="nav-arr" onclick="go(4)">→</button>
+    </nav>
+
+    <div class="d-hdr">
+      <div class="d-hdr-script">Day three</div>
+      <div class="d-hdr-title">Golden Gate · Muir Woods · Into Wine Country</div>
+      <div class="d-hdr-date">Tuesday, July 21, 2026</div>
+    </div>
+
+    <div class="d-body">
+      <div class="sec-lbl">The Day's Plan</div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">7:30am</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Pick Up Rental Car</div>
+          <div class="tl-desc">Your wheels for the rest of the trip. Drive north on Hwy 101.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">8:00am</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Vista Point — Walk the Bridge</div>
+          <div class="tl-desc">After crossing the Golden Gate heading north, stay far right and take the "Vista Point" exit immediately. Walk out on the pedestrian path from the Marin side — great straight-on bridge view. 15–20 min. If the lot is full, proceed directly to Battery Spencer.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">8:20am</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Battery Spencer</div>
+          <div class="tl-desc">2 min drive from Vista Point via Conzelman Rd. The classic postcard shot — Golden Gate Bridge with SF skyline behind it. Best view in the Headlands. 20–25 min. The photo you'll actually frame.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">9:00am</div><div class="tl-line"></div></div>
+        <div class="tl-r warn">
+          <div class="pills"><span class="pill pill-warn">⚠ Reservation Required</span></div>
+          <div class="tl-title">Muir Woods</div>
+          <div class="tl-desc">Book the 9:00–9:30am arrival window at recreation.gov — required and sells out. Main boardwalk + Bridge 2 loop only. Hard stop 10:30am — don't let it slip or Napa falls apart. Ancient coast redwoods — genuinely awe-inspiring.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">10:30am</div><div class="tl-line"></div></div>
+        <div class="tl-r opt">
+          <div class="tl-title">Depart for Napa</div>
+          <div class="tl-desc">Don't add stops. ~90 min drive east into wine country.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">12:15pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Lunch — Gott's Roadside</div>
+          <div class="tl-desc">Oxbow Public Market area. Fast, casual, genuinely good. Perfect reset before your first wine tasting.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">2:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-r booked">
+          <div class="pills"><span class="pill pill-ok">✓ Booked · 2:30pm</span></div>
+          <div class="tl-title">Stag's Leap Wine Cellars</div>
+          <div class="tl-desc">The winery that changed the wine world. In 1976 their Cab beat the finest French Bordeaux in a blind tasting by French experts — the legendary Judgement of Paris. $95pp.</div>
+          <div class="pq napa" style="margin-top:10px;">
+            <div class="pq-txt">"When the French judges learned what they had just scored highest, they were reportedly mortified. A four-year-old California winery had beaten wines considered the world standard for centuries."</div>
+            <div class="pq-attr">— The 1976 Judgement of Paris</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">Evening</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Dinner — Downtown Napa</div>
+          <div class="tl-desc">
+            <div class="dinner">
+              <div class="dopt"><strong>ZuZu</strong>Spanish tapas, great cocktails, lively locals spot. Top arrival night pick.</div>
+              <div class="dopt"><strong>Angèle</strong>French bistro, Napa riverfront patio, relaxed and scenic.</div>
+              <div class="dopt"><strong>Kitchen Door</strong>Casual global menu, good cocktails, approachable pricing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="foot">
+    <button class="foot-btn" onclick="go(2)">← Day 2</button>
+    <div class="foot-mid"><div class="foot-lbl">Day 3</div><div class="foot-sub">SF → Napa</div></div>
+    <button class="foot-btn" onclick="go(4)">Day 4 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DAY 4 — NAPA WINERY DAY
+══════════════════════════════════════════════ -->
+<div class="pg" id="p4">
+  <div class="day-page">
+    <div class="d-hero hero-napa">
+      <img src="https://images.pexels.com/photos/35227785/pexels-photo-35227785.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Napa Valley Vineyards" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <div class="hero-inner"></div>
+      <div class="d-hero-badge badge-napa">Napa Valley</div>
+    </div>
+
+    <nav class="d-nav">
+      <button class="nav-home" onclick="go(0)">SF · Napa · PDX</button>
+      <div class="nav-dots" id="dots4"></div>
+      <button class="nav-arr" onclick="go(3)">←</button>
+      <button class="nav-arr" onclick="go(5)">→</button>
+    </nav>
+
+    <div class="d-hdr">
+      <div class="d-hdr-script">Day four</div>
+      <div class="d-hdr-title">A Full Day in Wine Country</div>
+      <div class="d-hdr-date">Wednesday, July 22, 2026 · Three Tastings</div>
+    </div>
+
+    <div class="d-body">
+      <div class="sec-lbl">Three Tastings · One Perfect Day</div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">Morning</div><div class="tl-line"></div></div>
+        <div class="tl-r opt">
+          <div class="tl-title">Relaxed Start</div>
+          <div class="tl-desc">Sleep in, walk downtown Napa, coffee and a slow morning. First tasting isn't until 10:30am.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">10:30am</div><div class="tl-line"></div></div>
+        <div class="tl-r booked">
+          <div class="pills"><span class="pill pill-ok">✓ Booked · 10:30am</span></div>
+          <div class="tl-title">Domaine Carneros</div>
+          <div class="wcard">
+            <div class="wcard-name">Domaine Carneros</div>
+            <div class="wcard-tag">Sparkling Wine · Carneros District</div>
+            <div class="wcard-desc">One of the finest sparkling wine experiences in Napa. A stunning French chateau on a hillside with a sweeping outdoor terrace. Think Champagne house, California sunshine. The bubbles are exceptional — a completely different experience from your afternoon red wine tastings.</div>
+            <div class="wcard-meta">
+              <div class="wm-item"><strong>Style</strong>Sparkling, Pinot</div>
+              <div class="wm-item"><strong>Vibe</strong>Elegant, scenic</div>
+              <div class="wm-item"><strong>Setting</strong>French chateau on a hill</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">12:15pm</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Lunch — Mustard's Grill</div>
+          <div class="tl-desc">A Napa institution since 1983. Proper sit-down, no rushing. Next tasting isn't until 2:30pm — enjoy one of the great wine country lunches.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">2:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-r booked">
+          <div class="pills"><span class="pill pill-ok">✓ Booked · Complimentary</span></div>
+          <div class="tl-title">Cakebread Cellars</div>
+          <div class="wcard">
+            <div class="wcard-name">Cakebread Cellars</div>
+            <div class="wcard-tag">Cabernet Sauvignon · Rutherford</div>
+            <div class="wcard-desc">One of Napa's most respected names — and you're going as personal guests with a complimentary invitation. Excellent Cabernet and Chardonnay, professional without being stiff.</div>
+            <div class="wcard-meta">
+              <div class="wm-item"><strong>Style</strong>Cab, Chard</div>
+              <div class="wm-item"><strong>Vibe</strong>Polished, welcoming</div>
+              <div class="wm-item"><strong>Cost</strong>Complimentary</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">Evening</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Dinner — After a Full Wine Day</div>
+          <div class="tl-desc">
+            <div class="dinner">
+              <div class="dopt"><strong>Compline Wine Bar &amp; Restaurant</strong>600+ bottle list, living room vibe, vinyl records. Perfect for grazing after a long wine day.</div>
+              <div class="dopt"><strong>Waterfront Seafood Grill</strong>Riverfront patio, raw bar, fresh catch. Outdoor seats right on the Napa River.</div>
+              <div class="dopt"><strong>TORC</strong>Sophisticated food, deliberately relaxed atmosphere. Napa cooking without the Napa pretension.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="foot">
+    <button class="foot-btn" onclick="go(3)">← Day 3</button>
+    <div class="foot-mid"><div class="foot-lbl">Day 4</div><div class="foot-sub">Napa Valley</div></div>
+    <button class="foot-btn" onclick="go(5)">Day 5 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DAY 5 — NAPA → PORTLAND
+══════════════════════════════════════════════ -->
+<div class="pg" id="p5">
+  <div class="day-page">
+    <div class="d-hero hero-fly">
+      <img src="https://images.pexels.com/photos/35227785/pexels-photo-35227785.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Napa farewell" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <div class="hero-inner"></div>
+      <div class="d-hero-badge badge-tr">Napa → Portland</div>
+    </div>
+
+    <nav class="d-nav">
+      <button class="nav-home" onclick="go(0)">SF · Napa · PDX</button>
+      <div class="nav-dots" id="dots5"></div>
+      <button class="nav-arr" onclick="go(4)">←</button>
+      <button class="nav-arr" onclick="go(6)">→</button>
+    </nav>
+
+    <div class="d-hdr">
+      <div class="d-hdr-script">Day five</div>
+      <div class="d-hdr-title">Farewell Napa · Hello Portland</div>
+      <div class="d-hdr-date">Thursday, July 23, 2026</div>
+    </div>
+
+    <div class="d-body">
+
+      <div class="fbox">
+        <div class="fbox-lbl">✈ Flight — July 23 · All Three Together</div>
+        <div class="frow">
+          <div class="fperson">Everyone</div>
+          <div class="finfo">
+            <div class="fnum">UA 1301 · Conf. OZWC57 &amp; BRFMQY · Same flight!</div>
+            <div class="ftimes">10:15am <span class="farr">→</span> 12:08pm</div>
+            <div class="froute">San Francisco SFO → Portland PDX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">The Day's Plan</div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">Morning</div><div class="tl-line"></div></div>
+        <div class="tl-r opt">
+          <div class="tl-title">Last Morning in Napa</div>
+          <div class="tl-desc">Slow coffee, a walk along the Napa riverfront. Soak it in before heading to the airport.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">~7:30am</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Drive to SFO — Return Car</div>
+          <div class="tl-desc">~1 hour drive. Return the rental car at SFO. All three traveling to Portland together.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">10:15am</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Fly SFO → PDX · All Together</div>
+          <div class="tl-desc">Land in Portland at 12:08pm. Check in and begin the Pacific Northwest chapter.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-l"><div class="tl-time">Evening</div><div class="tl-line"></div></div>
+        <div class="tl-r">
+          <div class="tl-title">Arrive Portland · Easy First Night</div>
+          <div class="tl-desc">Settle in, explore the Pearl District on foot. Portland day-by-day plan coming soon.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="foot">
+    <button class="foot-btn" onclick="go(4)">← Day 4</button>
+    <div class="foot-mid"><div class="foot-lbl">Day 5</div><div class="foot-sub">Napa → Portland</div></div>
+    <button class="foot-btn" onclick="go(6)">Portland →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PORTLAND — COMING SOON
+══════════════════════════════════════════════ -->
+<div class="pg" id="p6">
+  <div class="day-page">
+    <div class="d-hero hero-pdx">
+      <img src="https://images.pexels.com/photos/3682818/pexels-photo-3682818.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Portland Oregon Skyline" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      <div class="hero-inner"></div>
+      <div class="d-hero-badge badge-pdx">Portland, Oregon</div>
+    </div>
+
+    <nav class="d-nav">
+      <button class="nav-home" onclick="go(0)">SF · Napa · PDX</button>
+      <div class="nav-dots" id="dots6"></div>
+      <button class="nav-arr" onclick="go(5)">←</button>
+      <button class="nav-arr" onclick="go(7)">→</button>
+    </nav>
+
+    <div class="d-hdr">
+      <div class="d-hdr-script">Days six – ten</div>
+      <div class="d-hdr-title">Portland — The Pacific Northwest</div>
+      <div class="d-hdr-date">July 23 – 28, 2026 · 5 Nights</div>
+    </div>
+
+    <div class="d-body">
+
+      <div class="fbox">
+        <div class="fbox-lbl">🏠 Where We're Staying</div>
+        <div class="frow">
+          <div class="fperson">Everyone</div>
+          <div class="f-info">
+            <div class="f-num">Staying with Rachel &amp; AJ</div>
+            <div class="ftimes">Home base in Portland</div>
+            <div class="froute">Best way to see the city — locals who know it</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fbox">
+        <div class="fbox-lbl">✈ Return Flights — July 28</div>
+        <div class="frow">
+          <div class="fperson">Cris &amp;<br>Caroline</div>
+          <div class="finfo">
+            <div class="fnum">UA 462 + UA 2812 · Seats 34A &amp; 34B · Via Houston IAH</div>
+            <div class="ftimes">7:13am <span class="farr">→</span> 5:55pm</div>
+            <div class="froute">PDX → Houston IAH → Tampa TPA</div>
+            <div class="fconf">⚠ Be at PDX by 5:30am</div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fperson">Rachel</div>
+          <div class="finfo">
+            <div class="fnum">Portland is home — no return flight needed</div>
+            <div class="ftimes">Already home ✈</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdx-soon">
+        <div class="pdx-icon">🌲</div>
+        <div class="pdx-title">Portland — Full Itinerary Coming Soon</div>
+        <div class="pdx-desc">Some things are locked in, more to be scheduled.</div>
+
+        <div class="mustdo">
+          <div class="sec-lbl" style="margin-top:0;">✅ Confirmed</div>
+          <div class="mi"><span>🍸</span><div><strong>Portland City Grill</strong> — Thursday Jul 23 evening. Drinks and appetizers. 30th floor, great first-night city views. ~7:00pm after settling in.</div></div>
+          <div class="mi"><span>🚗</span><div><strong>Enterprise Rental Car</strong> — Friday Jul 24. Day trip to Willamette Valley OR Hood River. Enterprise at 350 Beach St, SF (picked up Jul 21, returned Jul 24).</div></div>
+        </div>
+
+        <div class="mustdo" style="margin-top:12px;">
+          <div class="sec-lbl" style="margin-top:0;">📋 To Be Scheduled</div>
+          <div class="mi"><span>🗺</span><div><strong>Day Trip — Willamette Valley or Hood River</strong> — Friday Jul 24. Winery visit, lavender farm or cherry picking. TBD direction.</div></div>
+          <div class="mi"><span>🛒</span><div><strong>Portland Saturday Market</strong> — Saturday Jul 26 morning. Downtown Portland.</div></div>
+          <div class="mi"><span>🍹</span><div><strong>Life of Riley</strong> — TBD evening</div></div>
+          <div class="mi"><span>🍺</span><div><strong>Low Brow Lounge</strong> — TBD evening</div></div>
+          <div class="mi"><span>🌹</span><div><strong>Rachel &amp; Rose</strong> — TBD evening</div></div>
+          <div class="mi"><span>🌮</span><div><strong>Carlita's</strong> — TBD dinner</div></div>
+          <div class="mi"><span>🍣</span><div><strong>Bamboo Sushi</strong> — TBD dinner · Reserve ahead</div></div>
+          <div class="mi"><span>🦞</span><div><strong>Mo's Seafood &amp; Chowder</strong> — TBD dinner</div></div>
+          <div class="mi"><span>📚</span><div><strong>Powell's Books</strong> — World's largest independent bookstore</div></div>
+          <div class="mi"><span>🌿</span><div><strong>Japanese Garden</strong> — Washington Park</div></div>
+          <div class="mi"><span>🍺</span><div><strong>Pearl District Breweries</strong> — Deschutes, Breakside, food carts</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="foot">
+    <button class="foot-btn" onclick="go(5)">← Day 5</button>
+    <div class="foot-mid"><div class="foot-lbl">Portland</div><div class="foot-sub">Jul 23–28</div></div>
+    <button class="foot-btn" onclick="go(7)">Bookings →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     BOOKINGS
+══════════════════════════════════════════════ -->
+<div class="pg" id="p7">
+  <div class="day-page" style="background:var(--cream);">
+
+    <nav class="d-nav" style="position:relative;top:0;">
+      <button class="nav-home" onclick="go(0)">SF · Napa · PDX</button>
+      <div class="nav-dots" id="dots7"></div>
+      <button class="nav-arr" onclick="go(6)">←</button>
+      <button class="nav-arr" disabled>→</button>
+    </nav>
+
+    <div class="bk-hero">
+      <div class="bk-h1">Trip Bookings</div>
+      <div class="bk-sub">Status · July 19–28, 2026</div>
+    </div>
+
+    <div class="bk-body">
+
+      <div class="bk-grp">✓ Confirmed</div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Alcatraz Day Tour</div><div class="bk-det">Jul 20 · 8:40am · Conf. i73885120/73885116 · 3 adults · $143.85 · Arrive Pier 33 by 8:10am</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Stag's Leap Wine Cellars</div><div class="bk-det">Jul 21 · 2:30pm · $95pp · Stags Leap District, Napa</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Domaine Carneros</div><div class="bk-det">Jul 22 · 10:30am · Sparkling tasting · Carneros District</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Cakebread Cellars</div><div class="bk-det">Jul 22 · 2:30pm · Complimentary via personal invite</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Cris &amp; Caroline — Tampa to SF</div><div class="bk-det">UA 611 · Jul 19 · TPA 6:38am → SFO 9:15am · Seats 1A &amp; 1B · Conf. OZWC57</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Rachel — Portland to SF</div><div class="bk-det">UA 1896 · Jul 19 · PDX 5:15am → SFO 7:01am · Seat 29A · Conf. BRFMQY</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">All Three — SF to Portland</div><div class="bk-det">UA 1301 · Jul 23 · SFO 10:15am → PDX 12:08pm · Same flight! · Conf. OZWC57 &amp; BRFMQY</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Cris &amp; Caroline — Return to Tampa</div><div class="bk-det">UA 462 + UA 2812 · Jul 28 · PDX 7:13am → Houston → TPA 5:55pm · Seats 34A &amp; 34B</div></div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div>
+          <div class="bk-name">San Francisco Marriott Fisherman's Wharf</div>
+          <div class="bk-det">Jul 19–21 · 2 nights · 1250 Columbus Ave, San Francisco, CA 94133</div>
+          <button class="booking-conf" onclick="copyText('98131133')">Conf: 98131133 — tap to copy</button>
+        </div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div>
+          <div class="bk-name">Fairfield by Marriott Inn &amp; Suites Napa American Canyon</div>
+          <div class="bk-det">Jul 21–23 · 2 nights · 3800 Broadway Hwy 29, American Canyon, CA 94503</div>
+          <button class="booking-conf" onclick="copyText('73606967')">Conf: 73606967 — tap to copy</button>
+        </div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div><div class="bk-name">Portland — Staying with Rachel &amp; AJ</div><div class="bk-det">Jul 23–28 · Home base with the locals — best way to see Portland</div></div>
+      </div>
+
+      <div class="bk-grp" style="margin-top:24px;">⚠ Still To Book</div>
+
+      <div class="bk-item">
+        <div class="bk-icon todo">!</div>
+        <div>
+          <div class="bk-name">Muir Woods Parking</div>
+          <div class="bk-det">Jul 21 · 9:00–9:30am window · recreation.gov · Sells out — book immediately</div>
+          <div class="bk-act">⚠ Book Now</div>
+        </div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon todo">!</div>
+        <div>
+          <div class="bk-name">Charmaine's Rooftop</div>
+          <div class="bk-det">Jul 19 evening · Proper Hotel, SF · Reservation strongly recommended</div>
+          <div class="bk-act">⚠ Reserve Ahead</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="foot">
+    <button class="foot-btn" onclick="go(6)">← Portland</button>
+    <div class="foot-mid"><div class="foot-lbl">Bookings</div><div class="foot-sub">Trip Status</div></div>
+    <button class="foot-btn" disabled>—</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     JS — PAGE SWITCHER + DOTS
+══════════════════════════════════════════════ -->
+<script>
+let cur = 0;
+const N = 8;
+const LABELS = ['','Jul 19','Jul 20','Jul 21','Jul 22','Jul 23','Portland','Bookings'];
+
+function go(n) {
+  document.getElementById('p' + cur).classList.remove('on');
+  cur = n;
+  document.getElementById('p' + n).classList.add('on');
+  window.scrollTo(0, 0);
+  renderDots();
+}
+
+function renderDots() {
+  for (let p = 1; p <= 7; p++) {
+    const el = document.getElementById('dots' + p);
+    if (!el) continue;
+    el.innerHTML = '';
+    for (let i = 1; i <= 7; i++) {
+      const b = document.createElement('button');
+      b.className = 'dot' + (i === p ? ' on' : '');
+      b.title = LABELS[i];
+      b.setAttribute('aria-label', 'Go to ' + LABELS[i]);
+      b.onclick = () => go(i);
+      el.appendChild(b);
+    }
+  }
+}
+
+function copyText(text) {
+  navigator.clipboard?.writeText(text).catch(() => {});
+}
+
+renderDots();
+</script>
+
+</body>
+</html>
