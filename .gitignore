@@ -1,2 +1,5 @@
 # OneDrive left an orphan .git dir during first clone (files locked, cannot rm from bash)
 .git_broken_*
+
+# Leftover zips from failed Netlify CLI deploy attempts (locked, cannot rm from bash)
+deploy-*.zip
