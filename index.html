@@ -135,6 +135,7 @@ body {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+  /* fallback gradient shown when photo missing */
 }
 
 .cv-card-photo.sf-grad   { background: linear-gradient(160deg,#3B6FA0,#1B3D6F); }
@@ -224,6 +225,15 @@ body {
   overflow: hidden;
 }
 
+/*
+  ════════════════════════════════════════════
+  TO ADD REAL PHOTOS:
+  Replace the gradient background on each
+  .d-hero with an <img> tag like:
+  <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;">
+  ════════════════════════════════════════════
+*/
+
 .d-hero img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -255,6 +265,7 @@ body {
 .badge-pdx  { background: rgba(26,77,50,.75); }
 .badge-tr   { background: rgba(40,40,40,.65); }
 
+/* optional photo credit overlay */
 .hero-inner {
   position: absolute; inset: 0;
   display: flex; align-items: flex-end;
@@ -761,6 +772,7 @@ body {
 <div class="pg" id="p1">
   <div class="day-page">
 
+    <!-- HERO — replace class with an <img> when you have photos -->
     <div class="d-hero hero-sf">
       <img src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="San Francisco" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
       <div class="hero-inner"></div>
