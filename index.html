@@ -873,7 +873,7 @@ body {
       </div>
 
       <div class="tl-item">
-        <div class="tl-l"><div class="tl-time">2:00–<br>2:30pm</div><div class="tl-line"></div></div>
+        <div class="tl-l"><div class="tl-time">2:45pm</div><div class="tl-line"></div></div>
         <div class="tl-r">
           <div class="tl-title">Coffee — Caffè Trieste</div>
           <div class="tl-desc">601 Vallejo St, North Beach — 5 min walk from the hotel. SF institution since 1956, Beat Generation café, great espresso and iced drinks. A real neighborhood spot, not a chain.</div>
@@ -881,7 +881,7 @@ body {
       </div>
 
       <div class="tl-item">
-        <div class="tl-l"><div class="tl-time">3:00pm</div><div class="tl-line"></div></div>
+        <div class="tl-l"><div class="tl-time">3:15pm</div><div class="tl-line"></div></div>
         <div class="tl-r opt">
           <div class="tl-title">Hotel Check-in + Rest</div>
           <div class="tl-desc">Everyone has been up since before dawn. Don't skip this — it makes the evening much better.</div>
@@ -1015,9 +1015,9 @@ body {
               <div class="dopt"><strong>Original Joe's</strong>Classic SF Italian-American, great cocktails, since 1937. Best all-around if you stay in the neighborhood.</div>
               <div class="dopt"><strong>Tony's Pizza Napoletana</strong>Consistently ranked one of the best pizzas in the country. Fun and buzzy. Reserve ahead.</div>
               <div class="dopt"><strong>The Matterhorn</strong>Swiss raclette and fondue. Cozy, unique, perfect slower evening.</div>
-              <div class="dgrp-lbl">Marriott/SoMa Area + Rooftop After</div>
-              <div class="dopt"><strong>Tropisueño</strong>75 Yerba Buena Lane — next door to the Marriott Marquis. Handcrafted Mexican, strong tequila/mezcal program. Walk to The View Lounge after.</div>
-              <div class="dopt"><strong>Matador</strong>679 Sutter St, 5 min from Marriott. Elevated tacos, birria, fajitas, mezcal margaritas. More casual energy.</div>
+              <div class="dgrp-lbl">Downtown / SoMa — Short Uber + Rooftop After</div>
+              <div class="dopt"><strong>Tropisueño</strong>75 Yerba Buena Lane — downtown by Yerba Buena Gardens (~15 min Uber from the Wharf). Handcrafted Mexican, strong tequila/mezcal program. Walk to The View Lounge after.</div>
+              <div class="dopt"><strong>Matador</strong>679 Sutter St, near Union Square. Elevated tacos, birria, fajitas, mezcal margaritas. More casual energy.</div>
             </div>
           </div>
         </div>
@@ -1063,7 +1063,7 @@ body {
         <div class="tl-l"><div class="tl-time">7:30am</div><div class="tl-line"></div></div>
         <div class="tl-r">
           <div class="tl-title">Pick Up Rental Car</div>
-          <div class="tl-desc">Your wheels for the rest of the trip. Drive north on Hwy 101.</div>
+          <div class="tl-desc">Enterprise, 350 Beach St — your wheels for the SF &amp; Napa leg. Drive north on Hwy 101.</div>
         </div>
       </div>
 
@@ -1393,13 +1393,14 @@ body {
         <div class="mustdo">
           <div class="sec-lbl" style="margin-top:0;">✅ Confirmed</div>
           <div class="mi"><span>🍸</span><div><strong>Portland City Grill</strong> — Thursday Jul 23 evening. Drinks and appetizers. 30th floor, great first-night city views. ~7:00pm after settling in.</div></div>
-          <div class="mi"><span>🚗</span><div><strong>Enterprise Rental Car</strong> — Friday Jul 24. Day trip to Willamette Valley OR Hood River. Enterprise at 350 Beach St, SF (picked up Jul 21, returned Jul 24).</div></div>
+          <div class="mi"><span>🚗</span><div><strong>Enterprise Rental Car (SF &amp; Napa)</strong> — Picked up Tue Jul 21 at 350 Beach St, SF; returned Thu Jul 23 at SFO before the Portland flight.</div></div>
         </div>
 
         <div class="mustdo" style="margin-top:12px;">
           <div class="sec-lbl" style="margin-top:0;">📋 To Be Scheduled</div>
           <div class="mi"><span>🗺</span><div><strong>Day Trip — Willamette Valley or Hood River</strong> — Friday Jul 24. Winery visit, lavender farm or cherry picking. TBD direction.</div></div>
-          <div class="mi"><span>🛒</span><div><strong>Portland Saturday Market</strong> — Saturday Jul 26 morning. Downtown Portland.</div></div>
+          <div class="mi"><span>🚗</span><div><strong>Rental Car — Portland</strong> — Needs booking for the Jul 24 day trip (the SF car is returned Jul 23 at SFO).</div></div>
+          <div class="mi"><span>🛒</span><div><strong>Portland Saturday Market</strong> — Saturday Jul 25 morning. Downtown Portland (runs Sat &amp; Sun).</div></div>
           <div class="mi"><span>🍹</span><div><strong>Life of Riley</strong> — TBD evening</div></div>
           <div class="mi"><span>🍺</span><div><strong>Low Brow Lounge</strong> — TBD evening</div></div>
           <div class="mi"><span>🌹</span><div><strong>Rachel &amp; Rose</strong> — TBD evening</div></div>
@@ -1560,19 +1561,4 @@ function renderDots() {
       const b = document.createElement('button');
       b.className = 'dot' + (i === p ? ' on' : '');
       b.title = LABELS[i];
-      b.setAttribute('aria-label', 'Go to ' + LABELS[i]);
-      b.onclick = () => go(i);
-      el.appendChild(b);
-    }
-  }
-}
-
-function copyText(text) {
-  navigator.clipboard?.writeText(text).catch(() => {});
-}
-
-renderDots();
-</script>
-
-</body>
-</html>
+      b.
