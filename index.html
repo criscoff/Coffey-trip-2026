@@ -1063,7 +1063,7 @@ body {
         <div class="tl-l"><div class="tl-time">7:30am</div><div class="tl-line"></div></div>
         <div class="tl-r">
           <div class="tl-title">Pick Up Rental Car</div>
-          <div class="tl-desc">Enterprise, 350 Beach St — your wheels for the SF &amp; Napa leg. Drive north on Hwy 101.</div>
+          <div class="tl-desc">Pick up at San Francisco Fisherman's Wharf · Conf. 1595574001 — your wheels for the SF &amp; Napa leg. Drive north on Hwy 101.</div>
         </div>
       </div>
 
@@ -1298,7 +1298,7 @@ body {
         <div class="tl-l"><div class="tl-time">~7:30am</div><div class="tl-line"></div></div>
         <div class="tl-r">
           <div class="tl-title">Drive to SFO — Return Car</div>
-          <div class="tl-desc">~1 hour drive. Return the rental car at SFO. All three traveling to Portland together.</div>
+          <div class="tl-desc">~1 hour drive. Return the rental car at SFO (Conf. 1595574001). All three traveling to Portland together.</div>
         </div>
       </div>
 
@@ -1393,13 +1393,13 @@ body {
         <div class="mustdo">
           <div class="sec-lbl" style="margin-top:0;">✅ Confirmed</div>
           <div class="mi"><span>🍸</span><div><strong>Portland City Grill</strong> — Thursday Jul 23 evening. Drinks and appetizers. 30th floor, great first-night city views. ~7:00pm after settling in.</div></div>
-          <div class="mi"><span>🚗</span><div><strong>Enterprise Rental Car (SF &amp; Napa)</strong> — Picked up Tue Jul 21 at 350 Beach St, SF; returned Thu Jul 23 at SFO before the Portland flight.</div></div>
+          <div class="mi"><span>🚗</span><div><strong>Rental Car — SF &amp; Napa</strong> — Pick up Tue Jul 21 at SF Fisherman's Wharf; return Thu Jul 23 at SFO before the Portland flight. Conf. 1595574001.</div></div>
+          <div class="mi"><span>🚗</span><div><strong>Rental Car — Portland</strong> — Fri Jul 24. Pick up at Portland City Center, return same location that evening. Conf. 2120775732.</div></div>
         </div>
 
         <div class="mustdo" style="margin-top:12px;">
           <div class="sec-lbl" style="margin-top:0;">📋 To Be Scheduled</div>
           <div class="mi"><span>🗺</span><div><strong>Day Trip — Willamette Valley or Hood River</strong> — Friday Jul 24. Winery visit, lavender farm or cherry picking. TBD direction.</div></div>
-          <div class="mi"><span>🚗</span><div><strong>Rental Car — Portland</strong> — Needs booking for the Jul 24 day trip (the SF car is returned Jul 23 at SFO).</div></div>
           <div class="mi"><span>🛒</span><div><strong>Portland Saturday Market</strong> — Saturday Jul 25 morning. Downtown Portland (runs Sat &amp; Sun).</div></div>
           <div class="mi"><span>🍹</span><div><strong>Life of Riley</strong> — TBD evening</div></div>
           <div class="mi"><span>🍺</span><div><strong>Low Brow Lounge</strong> — TBD evening</div></div>
@@ -1507,6 +1507,24 @@ body {
         <div><div class="bk-name">Portland — Staying with Rachel &amp; AJ</div><div class="bk-det">Jul 23–28 · Home base with the locals — best way to see Portland</div></div>
       </div>
 
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div>
+          <div class="bk-name">Rental Car — SF &amp; Napa</div>
+          <div class="bk-det">Jul 21–23 · Pick up SF Fisherman's Wharf · Return SFO</div>
+          <button class="booking-conf" onclick="copyText('1595574001')">Conf: 1595574001 — tap to copy</button>
+        </div>
+      </div>
+
+      <div class="bk-item">
+        <div class="bk-icon ok">✓</div>
+        <div>
+          <div class="bk-name">Rental Car — Portland</div>
+          <div class="bk-det">Jul 24 · Pick up &amp; return Portland City Center (same day)</div>
+          <button class="booking-conf" onclick="copyText('2120775732')">Conf: 2120775732 — tap to copy</button>
+        </div>
+      </div>
+
       <div class="bk-grp" style="margin-top:24px;">⚠ Still To Book</div>
 
       <div class="bk-item">
@@ -1561,4 +1579,19 @@ function renderDots() {
       const b = document.createElement('button');
       b.className = 'dot' + (i === p ? ' on' : '');
       b.title = LABELS[i];
-      b.
+      b.setAttribute('aria-label', 'Go to ' + LABELS[i]);
+      b.onclick = () => go(i);
+      el.appendChild(b);
+    }
+  }
+}
+
+function copyText(text) {
+  navigator.clipboard?.writeText(text).catch(() => {});
+}
+
+renderDots();
+</script>
+
+</body>
+</html>
