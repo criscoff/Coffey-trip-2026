@@ -2,6 +2,13 @@
   publish = "."
   command = ""
 
+# Site moved to Vercel — send everyone to the new home (path preserved).
+[[redirects]]
+  from = "/*"
+  to = "https://west-coast-trip-summer-2026.vercel.app/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
